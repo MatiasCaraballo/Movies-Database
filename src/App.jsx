@@ -1,53 +1,89 @@
-
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [movie, setMovie] = useState('');
-  const [result, setResult] = useState('');
+  const [movies, setMovies] = useState([]);
+  const [search, setSearch] = useState(''); 
   const apiKey = 'e0a07a3d';
-
-  const searchMovie = () => {
-    fetch(`http://www.omdbapi.com/?apikey=${apiKey}&t=${movie}`)
-      .then(response => response.json())
-      .then(data => {
-        setResult(data);
-      })
-      .catch(error => {
-        console.error('Error al llamar a la API:', error);
-      });
+  const handleInputChange = (e) => {
+    setSearch(e.target.value)
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await fetchMovies();
   };
+
+  const fetchMovies = async () => {
+    try {
+      const response = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&t=${search}`);
+      const data = await response.json();
+      setMovies([data]); 
+    } catch (error) {
+      console.error('Error al llamar a la API:', error);
+    }
+  };
+  const printData =(movie) => { 
+    return(<> 
+    <h2>{movie.Title}</h2>
+
+                <img src={movie.Poster} alt={movie.Title} />
+                
+                <p>
+                  Synopsis: {movie.Plot}
+                  <ul>
+                    <li> Cast: {movie.Actors}</li>
+                    <li>Directed by: {movie.Director}</li>
+                    <li>Year: {movie.Year}</li>
+                    <li>Country:{movie.Country}</li>
+                    
+                    <li>Rated: {movie.Rated}</li>
+                  </ul>
+                  </p>
+                  </>)
+              
+  }
 
   return (
     <>
-      <h1>The Movies Database</h1>
-      <form>
+      <h1 className='principalTitle'>THE MOVIES DATABASE</h1>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           className="movie"
-          value={movie}
+          value={search}
           placeholder="Search a movie"
-          onChange={(e) => setMovie(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
         <input
-          type="button"
+          type="submit" 
           value="Let's go!"
           className="boton"
-          onClick={searchMovie}  
         />
       </form>
 
-      {/* Aquí puedes mostrar los resultados */}
-      {result && (
-        <div>
-          <h2>Movie:</h2>
-          <p>{result.Title}, ({result.Year})</p>
-          <img src={result.Poster} alt="poster" />
-          <h2>Actors:</h2>
-          <p>{result.Actors}</p>
-        </div>
-      )}
+      <div className="listMovies">
+        {
+          movies.map((movie) => (
+            
+            <div key={movie.imdbID}>
+              {movie.Response == 'False' && <p>No se encontraron películas.</p>}
+              {movie.Response == 'True' && printData}
+               
+
+              <div className='posterOverview'>
+                
+              </div>
+              
+
+            
+            </div>
+          )
+          )
+        }
+      </div>
+    
     </>
+    
   );
 }
 
