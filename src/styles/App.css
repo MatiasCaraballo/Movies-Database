@@ -2,19 +2,26 @@ html{font-size: 10px;}
 * {background-color: black;
 color:white;
 font-family: 'Open Sans', sans-serif;
-font-size:2rem;
+font-size:1.8rem;
 
 
 }
 .principalTitle{ color:red}
 .posterOverview{
   display: flex;
-flex-direction: row;}
-h1{font-size:5rem;}
-h2,h3{text-transform: uppercase;
-font-size: 4rem;}
+flex-direction: row;
+}
+
+h1{
+  font-size:5rem;
+}
+h2,h3{
+  text-transform: uppercase;
+font-size: 4rem;
+}
+
 h1,h2,p,img,form{
-  margin: 2rem;
+  margin: 1rem;
   padding:1rem
 }
 
