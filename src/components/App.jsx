@@ -33,7 +33,7 @@ function App() {
       <div className='posterOverview'>
         <img src={movie.Poster} alt={movie.Title} />
         
-          Synopsis: {movie.Plot}
+          <p> Synopsis: {movie.Plot}</p>
       </div>
           <ul>
             <li>Cast: {movie.Actors}</li>
@@ -50,8 +50,9 @@ function App() {
     );
   };
 
-  const addMovie = (movie) => {
-    setMyList((prevList) => [...prevList, movie]);
+  const addMovie = (movie) => {myList.includes(movie)
+    ? setMyList((prevList) => prevList.filter((m) => m !== movie))
+    : setMyList((prevList) => [...prevList, movie])
   };
 
   const printMyList = () => {
@@ -60,7 +61,7 @@ function App() {
         <ul>
           {myList.map((movie) => (
             <li key={movie.Title}>
-              <img src={movie.Poster} alt={movie.Title} />
+              <img src={movie.Poster} alt={movie.Title} width="200px" height="300px" />
             </li>
           ))}
         </ul>

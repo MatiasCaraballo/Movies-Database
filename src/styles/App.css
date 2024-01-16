@@ -20,9 +20,9 @@ h2,h3{
 font-size: 4rem;
 }
 
-h1,h2,p,img,form{
-  margin: 1rem;
-  padding:1rem
+h1,h2,p,img,button,input{
+  margin: 2rem;
+  
 }
 
 ul{
@@ -30,3 +30,7 @@ ul{
 margin-top: 4rem;
 padding:2rem;
 }
+
+.myList{ display:flex;
+flex-direction: row;}
+
